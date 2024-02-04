@@ -25,9 +25,9 @@ ALPACA_CREDS = {
 class MLTrader(Strategy):
 
     # runs once
-    def initialize(self, symbol:str="SPY", cash_at_risk:float=.15):
+    def initialize(self, symbol:str="SPY", cash_at_risk:float=.05):
         self.symbol = symbol
-        self.sleeptime = "24H" # Time the program will pause between iterations for the on_trading_iteration function
+        self.sleeptime = "6H" # Time the program will pause between iterations for the on_trading_iteration function
         self.last_trade = None
         self.cash_at_risk = cash_at_risk # The percentage of cash to risk on each trade
         self.api = REST(key_id=API_KEY, secret_key=API_SECRET, base_url=BASE_URL)
@@ -70,7 +70,7 @@ class MLTrader(Strategy):
         if cash > last_price:
 
             # long
-            if sentiment == 'positive' and probability > .9:
+            if sentiment == 'positive' and probability > .99:
                 if self.last_trade == 'sell':
                     self.sell_all()
                 order = self.create_order(
@@ -86,7 +86,7 @@ class MLTrader(Strategy):
                 self.last_trade = 'buy'
             
             # short
-            elif sentiment == 'negative' and probability > .9:
+            elif sentiment == 'negative' and probability > .99:
                 if self.last_trade == 'buy':
                     self.sell_all()
                 order = self.create_order(
@@ -110,8 +110,8 @@ strategy = MLTrader(name='mlstrat',
                                 }
                     )
 
-start_date = datetime(2024, 1, 1)
-end_date = datetime(2024, 2, 1)
+start_date = datetime(2023, 1, 1)
+end_date = datetime(2024, 1, 1)
 
 # To deploy this live
 
