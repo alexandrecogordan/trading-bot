@@ -2,3 +2,4 @@
 /logs/*
 developer.ipynb
 requirements.txt
+/__pycache__/*

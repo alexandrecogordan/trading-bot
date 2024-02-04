@@ -14,6 +14,7 @@ load_dotenv()
 
 API_KEY = os.getenv('API_KEY')
 API_SECRET = os.getenv('API_SECRET')
+BASE_URL = os.getenv('BASE_URL')
 
 ALPACA_CREDS = {
     'API_KEY': API_KEY,
@@ -26,10 +27,10 @@ class MLTrader(Strategy):
     # runs once
     def initialize(self, symbol:str="SPY", cash_at_risk:float=.15):
         self.symbol = symbol
-        self.sleep_time = "2H" # Time the program will pause between iterations for the on_trading_iteration function
+        self.sleeptime = "24H" # Time the program will pause between iterations for the on_trading_iteration function
         self.last_trade = None
         self.cash_at_risk = cash_at_risk # The percentage of cash to risk on each trade
-        self.api = REST(key_id=API_KEY, secret_key=API_SECRET, base_url='https://paper-api.alpaca.markets')
+        self.api = REST(key_id=API_KEY, secret_key=API_SECRET, base_url=BASE_URL)
     
     def position_sizing(self):
         cash = self.get_cash()
