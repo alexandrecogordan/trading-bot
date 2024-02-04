@@ -1,1 +1,4 @@
 .env
+/logs/*
+developer.ipynb
+requirements.txt
